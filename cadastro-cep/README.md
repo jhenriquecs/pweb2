@@ -1,16 +1,74 @@
-# React + Vite
+# Cadastro de Endereço com CEP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Formulário de cadastro de endereço que busca e preenche os dados automaticamente a partir do CEP, usando a API pública [ViaCEP](https://viacep.com.br/).
 
-Currently, two official plugins are available:
+Construído com **React** + **Vite**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Funcionalidades
 
-## React Compiler
+- Máscara automática no campo CEP (`00000-000`)
+- Busca dos dados ao sair do campo CEP (evento `blur`)
+- Validação do formato (8 dígitos)
+- Preenchimento automático de logradouro, bairro, cidade e UF
+- Tratamento de CEP inexistente e de falhas de rede
+- Mensagens de status (buscando / encontrado / erro)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologias
 
-## Expanding the ESLint configuration
+- [React](https://react.dev/)
+- [Vite](https://vite.dev/)
+- [API ViaCEP](https://viacep.com.br/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Como rodar
+
+Pré-requisitos: [Node.js](https://nodejs.org/) 18+.
+
+```bash
+# instalar dependências
+npm install
+
+# ambiente de desenvolvimento (http://localhost:5173)
+npm run dev
+
+# build de produção
+npm run build
+
+# pré-visualizar o build
+npm run preview
+```
+
+## Estrutura
+
+```
+cadastro-cep/
+├── index.html
+├── src/
+│   ├── main.jsx                  # ponto de entrada
+│   ├── App.jsx                   # componente raiz
+│   ├── index.css                 # estilos globais
+│   └── components/
+│       ├── AddressForm.jsx       # formulário + lógica de busca de CEP
+│       └── AddressForm.css       # estilos do formulário
+└── vite.config.js
+```
+
+## Como funciona
+
+Ao preencher o CEP e sair do campo, o componente faz uma requisição para:
+
+```
+https://viacep.com.br/ws/{cep}/json/
+```
+
+A resposta em JSON é usada para preencher os demais campos do endereço. Caso o
+CEP não exista, a API retorna `{ "erro": true }`, tratado com uma mensagem ao
+usuário.
+
+## Exemplo de teste
+
+Digite `01001-000` no campo CEP e saia do campo:
+
+- **Logradouro:** Praça da Sé
+- **Bairro:** Sé
+- **Cidade:** São Paulo
+- **UF:** SP
