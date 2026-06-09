@@ -4,6 +4,7 @@ import './AddressForm.css';
 const EMPTY_ADDRESS = {
   cep: '',
   logradouro: '',
+  numero: '',
   complemento: '',
   bairro: '',
   localidade: '',
@@ -36,6 +37,7 @@ export default function AddressForm() {
     setAddress((prev) => ({
       ...EMPTY_ADDRESS,
       cep: prev.cep,
+      numero: prev.numero,
     }));
   }
 
@@ -84,17 +86,15 @@ export default function AddressForm() {
     }
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log('Endereço cadastrado:', address);
-    setStatus({ message: 'Cadastro realizado com sucesso!', type: 'ok' });
-  }
-
   return (
     <main className="container">
       <h1>Cadastro de Endereço</h1>
 
-      <form className="address-form" autoComplete="off" onSubmit={handleSubmit}>
+      <form
+        className="address-form"
+        autoComplete="off"
+        onSubmit={(event) => event.preventDefault()}
+      >
         <div className="field">
           <label htmlFor="cep">CEP</label>
           <input
@@ -115,15 +115,29 @@ export default function AddressForm() {
           )}
         </div>
 
-        <div className="field">
-          <label htmlFor="logradouro">Logradouro</label>
-          <input
-            type="text"
-            id="logradouro"
-            name="logradouro"
-            value={address.logradouro}
-            onChange={handleChange}
-          />
+        <div className="row">
+          <div className="field field-grow">
+            <label htmlFor="logradouro">Logradouro</label>
+            <input
+              type="text"
+              id="logradouro"
+              name="logradouro"
+              value={address.logradouro}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="field field-numero">
+            <label htmlFor="numero">Número</label>
+            <input
+              type="text"
+              id="numero"
+              name="numero"
+              inputMode="numeric"
+              value={address.numero}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         <div className="field">
@@ -172,8 +186,6 @@ export default function AddressForm() {
             />
           </div>
         </div>
-
-        <button type="submit">Cadastrar</button>
       </form>
     </main>
   );

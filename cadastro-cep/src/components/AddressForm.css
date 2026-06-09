@@ -32,6 +32,10 @@
   width: 80px;
 }
 
+.address-form .field-numero {
+  width: 120px;
+}
+
 .address-form label {
   font-size: 0.8rem;
   font-weight: 600;
