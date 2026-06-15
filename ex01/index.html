@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercício 01 — Exams</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 2rem 1rem;
+        max-width: 760px;
+        margin-inline: auto;
+      }
+      a { color: #38bdf8; }
+      h1 { margin-top: 0; }
+      pre {
+        background: #1e293b;
+        border: 1px solid rgba(148, 163, 184, .15);
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        overflow-x: auto;
+        line-height: 1.55;
+        font-size: .95rem;
+      }
+      .muted { color: #94a3b8; font-size: .9rem; }
+    </style>
+  </head>
+  <body>
+    <p><a href="../">← voltar</a></p>
+    <h1>Exercício 01 — classe <code>Exams</code></h1>
+    <p class="muted">Saída do <code>exams.js</code> (mesmo conteúdo que apareceria no console):</p>
+    <pre id="output"></pre>
+
+    <script>
+      // Redireciona console.log para a página, preservando o comportamento original.
+      (function () {
+        const out = document.getElementById("output");
+        const original = console.log.bind(console);
+        console.log = function (...args) {
+          out.textContent +=
+            args
+              .map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a)))
+              .join(" ") + "\n";
+          original(...args);
+        };
+      })();
+    </script>
+    <script src="exams.js"></script>
+  </body>
+</html>

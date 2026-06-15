@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWeb2 — Projetos</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f172a;
+        --card: #1e293b;
+        --accent: #38bdf8;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+      }
+      h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 .25rem; }
+      p.lead { color: var(--muted); margin: 0 0 2.5rem; text-align: center; }
+      .grid {
+        display: grid;
+        gap: 1.25rem;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        width: 100%;
+        max-width: 880px;
+      }
+      a.card {
+        display: block;
+        background: var(--card);
+        border: 1px solid rgba(148, 163, 184, .15);
+        border-radius: 14px;
+        padding: 1.4rem 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: transform .15s ease, border-color .15s ease;
+      }
+      a.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+      a.card h2 { margin: 0 0 .4rem; font-size: 1.2rem; }
+      a.card span { color: var(--accent); font-weight: 600; }
+      a.card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.4; }
+      footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
+    </style>
+  </head>
+  <body>
+    <h1>PWeb2</h1>
+    <p class="lead">Programação Web 2 — coletânea de projetos</p>
+
+    <div class="grid">
+      <a class="card" href="./cadastro-cep/">
+        <h2>Cadastro de CEP <span>→</span></h2>
+        <p>App em React + Vite que consulta endereço a partir do CEP.</p>
+      </a>
+      <a class="card" href="./country-flags/">
+        <h2>Country Flags <span>→</span></h2>
+        <p>Galeria de bandeiras de países em HTML, CSS e JavaScript.</p>
+      </a>
+      <a class="card" href="./ex01/">
+        <h2>Exercício 01 <span>→</span></h2>
+        <p>Classe <code>Exams</code> em JavaScript com cálculo de notas.</p>
+      </a>
+    </div>
+
+    <footer>Hospedado no GitHub Pages</footer>
+  </body>
+</html>

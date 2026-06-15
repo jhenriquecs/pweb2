@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissões mínimas exigidas pelo deploy oficial do GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante que apenas um deploy rode por vez, cancelando execuções em fila
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: cadastro-cep/package-lock.json
+
+      - name: Build cadastro-cep (React + Vite)
+        working-directory: cadastro-cep
+        run: |
+          npm ci
+          npm run build -- --base=/pweb2/cadastro-cep/
+
+      - name: Montar o site combinado
+        run: |
+          mkdir -p _site
+          # Landing page na raiz (links para os 3 projetos)
+          cp index.html _site/index.html
+          # App React (já buildado com base /pweb2/cadastro-cep/)
+          cp -r cadastro-cep/dist _site/cadastro-cep
+          # Projeto estático (caminhos relativos, funciona em subpasta)
+          cp -r country-flags _site/country-flags
+          # Demo do ex01 (exams.js rodando no navegador)
+          cp -r ex01 _site/ex01
+
+      - name: Upload do artefato do Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy para o GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
